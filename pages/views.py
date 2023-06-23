@@ -21,12 +21,12 @@ class MovieData_pk(APIView):
          movie_data=Movie.objects.get(id=id)
          data=MovieSerializers(movie_data)
          return Response(data.data)
-#     def put(self,request,id):
-         boards=Board.objects.get(id=id)
-#         data=BoardSerializers(boards,data=request.data)
-#         if data.is_valid():
-#             data.save()
-#         return Response(data.data)
+     def put(self,request,id):
+         movie_data=Movie.objects.get(id=id)
+         data=MovieSerializers(movie_data,data=request.data)
+         if data.is_valid():
+             data.save()
+         return Response(data.data)
 #     def delete(self,request,id):
 #         boards=Board.objects.get(id=id)
 #         boards.delete()
