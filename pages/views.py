@@ -27,7 +27,7 @@ class MovieData_pk(APIView):
          if data.is_valid():
              data.save()
          return Response(data.data)
-#     def delete(self,request,id):
-#         boards=Board.objects.get(id=id)
-#         boards.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT) 
+     def delete(self,request,id):
+         movie_data=Movie.objects.all(id=id)
+         movie_data.delete()
+         return Response(status=status.HTTP_204_NO_CONTENT) 
