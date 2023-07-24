@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Movie,Genre
-
-class GenreSerializers(serializers.ModelSerializer):
-    class Meta:
-        model=Genre
-        fields='__all__'
+from .models import Movie,Rating
 
 class MovieSerializers(serializers.ModelSerializer):
     class Meta:
         model=Movie
         fields='__all__'
+class ratingSerializers(serializers.ModelSerializer):
+    class Meta:
+        model=Rating
+        fields='__all__'
+
