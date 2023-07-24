@@ -19,27 +19,27 @@ class MoviesData(APIView):
          return Response(add_Movie.errors,status=status.HTTP_400_BAD_REQUEST)
       
 class MovieData_pk(APIView):
-     def get(self,request,id):
-         movie_data=Movie.objects.get(id=id)
+     def get(self,request,slug):
+         movie_data=Movie.objects.get(slug=slug)
          data=MovieSerializers(movie_data)
          return Response(data.data)
-     def put(self,request,id):
-         movie_data=Movie.objects.get(id=id)
+     def put(self,request,slug):
+         movie_data=Movie.objects.get(slug=slug)
          data=MovieSerializers(movie_data,data=request.data)
          if data.is_valid():
              data.save()
          return Response(data.data)
-     def delete(self,request,id):
-         movie_data=Movie.objects.all(id=id)
+     def delete(self,request,slug):
+         movie_data=Movie.objects.all(slug=slug)
          movie_data.delete()
          return Response(status=status.HTTP_204_NO_CONTENT) 
      
 
 @api_view(['GET','post'])
-def movie_rate(request, pk):
+def movie_rate(request, slug):
 
     if 'stars' in request.data:
-            movie = Movie.objects.get(pk=pk)
+            movie = Movie.objects.get(slug=slug)
             stars = request.data['stars']
             username = request.data['username']
             user = User.objects.get(username=username)
@@ -69,6 +69,12 @@ def movie_rate(request, pk):
             }
             return Response(json , status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def get_new_movie(request):
+     movie=Movie.objects.all()
+     new_movie=movie.order_by('-created_at')[:10]
+     serializer=MovieSerializers(new_movie,many=True)
+     return Response(serializer.data)
 
 @api_view(['GET'])
 def seach_about_movie(request):
